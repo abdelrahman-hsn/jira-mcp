@@ -1,6 +1,8 @@
 # @abdelrahmanhsn/jira-mcp
 
-A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that connects your AI IDE to Jira. Query your tickets, active sprint, and issue details directly from GitHub Copilot, Cursor, Claude Desktop, or any MCP-compatible client.
+A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that connects your AI IDE to Jira. Query tickets, manage sprints, and let AI autonomously implement, test, and ship Jira tickets — all without leaving your editor.
+
+Works with GitHub Copilot, Cursor, Claude Desktop, and any MCP-compatible client.
 
 ## Tools
 
@@ -14,12 +16,32 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that co
 | `get_sprint_summary` | Get all sprint tickets grouped by status (Todo / In Progress / Done) |
 | `search_tickets` | Search tickets with plain English or raw JQL |
 | `get_context_for_pr` | Extract Jira ticket from a branch name and return a ready-to-use PR description block |
+| `start_ticket` | **🤖 Autonomous mode** — assigns ticket, moves to In Progress, creates git branch, then drives AI to implement, test, commit, push, open PR, and comment on Jira — non-stop |
 
 ## Prerequisites
 
 - Node.js 18 or later
 - A Jira Cloud account
 - A Jira API token ([generate one here](https://id.atlassian.com/manage-profile/security/api-tokens))
+- **GitHub CLI** — required for `start_ticket` to create PRs automatically
+
+### Install GitHub CLI
+
+```bash
+# macOS
+brew install gh
+gh auth login
+
+# Windows
+winget install --id GitHub.cli
+gh auth login
+
+# Linux
+# See https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+gh auth login
+```
+
+> If `gh` is not installed or not authenticated, `start_ticket` will return clear instructions instead of silently failing.
 
 ## Setup
 
@@ -115,17 +137,47 @@ Open `~/Library/Application Support/Claude/claude_desktop_config.json` and add:
 
 ## Usage Examples
 
-Once configured, you can ask your AI assistant:
+### Everyday queries
 
 - *"Show me my current Jira tickets"*
 - *"What's in my active sprint?"*
 - *"Get me the details for PROJ-1234"*
-- *"Summarize the description of PROJ-5678"*
 - *"Add a comment to PROJ-123 saying the fix is deployed to staging"*
 - *"Give me my standup for today"*
 - *"Summarize the active sprint — how many tickets are done vs in progress?"*
 - *"Search for open bugs related to login"*
+
+### PR workflow
+
 - *"Get PR context for branch STUD-17891-add-email-icon"*
+  → Extracts the ticket key from the branch, fetches description + comments, returns a formatted PR description block ready to paste or expand.
+
+### Autonomous mode — `start_ticket`
+
+The most powerful tool. One prompt and AI does everything:
+
+```
+"Start working on STUD-17931"
+```
+
+**What happens automatically, with no stops:**
+1. ✅ Self-assigns the Jira ticket to you
+2. ✅ Moves it to **In Progress**
+3. ✅ Creates and switches to a git branch (e.g. `stud-17931-content-preview-bug`)
+4. ✅ AI reads description, acceptance criteria, and comments
+5. ✅ Implements the feature/fix
+6. ✅ Runs the test suite — fixes failures automatically
+7. ✅ Commits and pushes the branch
+8. ✅ Opens a PR via `gh pr create`
+9. ✅ Posts the PR link as a comment on the Jira ticket
+
+You can optionally pass the repo path:
+
+```
+"Start working on STUD-17931 in /Users/you/code/my-project"
+```
+
+If omitted, the tool auto-detects the git repo from the current working directory.
 
 ## Security
 
