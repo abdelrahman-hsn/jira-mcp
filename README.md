@@ -53,6 +53,13 @@ gh auth login
 
 ### 2. Configure your MCP client
 
+**✨ The easiest way (Web Setup UI):** 
+Simply add the server to your MCP config without any environment variables. When the MCP server starts, it will automatically launch an interactive web UI in your browser (`http://localhost:9898`). You can enter your Jira credentials there, and it will securely save them directly into your AI IDE's local configuration file and seamlessly start the MCP server!
+
+*Supported auto-save clients: VS Code, Cursor, Claude Desktop, and Antigravity.*
+
+**Or, configure it manually:**
+
 Pick your AI IDE below and add the config. Replace the `env` values with your own.
 
 ---

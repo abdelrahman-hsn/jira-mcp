@@ -1,7 +1,7 @@
 {
   "name": "@abdelrahmanhsn/jira-mcp",
   "type": "module",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "MCP server for Jira — query your tickets, active sprints, and issue details from any AI IDE (GitHub Copilot, Cursor, Claude Desktop)",
   "main": "server.js",
   "bin": {
