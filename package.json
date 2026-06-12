@@ -1,14 +1,19 @@
 {
   "name": "@abdelrahmanhsn/jira-mcp",
   "type": "module",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "MCP server for Jira — query your tickets, active sprints, and issue details from any AI IDE (GitHub Copilot, Cursor, Claude Desktop)",
-  "main": "server.js",
+  "main": "dist/index.js",
   "bin": {
-    "jira-mcp": "./server.js"
+    "jira-mcp": "./dist/index.js"
   },
   "scripts": {
-    "start": "node server.js"
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "lint": "eslint src/",
+    "format": "prettier --write src/"
   },
   "keywords": [
     "mcp",
@@ -42,5 +47,13 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",
     "axios": "^1.15.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "eslint": "^9.39.4",
+    "prettier": "^3.8.4",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "vitest": "^3.2.6"
   }
 }

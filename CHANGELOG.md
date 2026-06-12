@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] - 2026-06-13
+
+### Added
+- **TypeScript Migration**: Completely migrated the project to TypeScript, transitioning from a monolithic JavaScript file to a professional, modular architecture.
+- **Fast Bundling**: Configured \`tsup\` for rapid ESM building, outputting a clean \`dist/index.js\` to improve load times and CLI structure.
+- **Automated Testing**: Integrated \`vitest\` and added test coverage for core configuration parsing and service instantiation.
+- **Modular Tools Structure**: Extracted the Jira tools into individual modules within \`src/tools/\`, implementing proper Zod typings and a clean separation of concerns.
+
 ## [1.7.0] - 2026-06-12
 
 ### Added
